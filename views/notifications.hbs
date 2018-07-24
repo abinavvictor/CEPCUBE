@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href= "/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Light Bootstrap Dashboard by Creative Tim</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <!-- Bootstrap core CSS     -->
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="/stylesheets/animate.min.css" rel="stylesheet"/>
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="/stylesheets/light-bootstrap-dashboard.css" rel="stylesheet"/>
+
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="/stylesheets/demo.css" rel="stylesheet" />
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="stylesheets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
+    <title>Spread.Sheets ExcelIO</title>
+
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+
+    <link href="http://cdn.grapecity.com/spreadjs/hosted/css/gc.spread.sheets.excel2013white.10.0.0.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="http://cdn.grapecity.com/spreadjs/hosted/scripts/gc.spread.sheets.all.10.0.0.min.js"></script>
+    <script type="text/javascript" src="http://cdn.grapecity.com/spreadjs/hosted/scripts/interop/gc.spread.excelio.10.0.0.min.js"></script>
+
+
+
+    <script>
+        var hiddenWorkbook, excelIO, spread;
+        window.onload = function () {
+            excelIO = new GC.Spread.Excel.IO();
+            hiddenWorkbook = new GC.Spread.Sheets.Workbook(document.getElementById("hiddenWorkbook"));
+            spread = new GC.Spread.Sheets.Workbook(document.getElementById("ss"));
+        }
+
+        function ImportFileStart() {
+            var excelFile = document.getElementById("fileDemo").files[0];
+            excelIO.open(excelFile, function (json) {
+                var workbookObj = json;
+                hiddenWorkbook.fromJSON(workbookObj);
+
+                CreateSheetSelect();
+
+            }, function (e) {
+                console.log(e);
+            });
+        }
+
+        function CopySheet() {
+            spread.removeSheet(0);
+            spread.addSheet();
+            var sheetNumber = document.getElementById('sheetSelect').value;
+
+            var sheetJson = JSON.stringify(hiddenWorkbook.getSheet(sheetNumber).toJSON());
+            spread.suspendPaint();
+            hiddenWorkbook.getNamedStyles().forEach(function (namedStyle) {
+                spread.addNamedStyle(namedStyle);
+            })
+            spread.getSheet(0).fromJSON(JSON.parse(sheetJson));
+            spread.resumePaint();
+        }
+
+        function CreateSheetSelect() {
+            var sheetSelectionDiv = document.getElementById('sheetSelection');
+            sheetSelectionDiv.style.display = "inline";
+            var dropDown = document.getElementById('sheetSelect');
+            for (var s = 0; s < hiddenWorkbook.getSheetCount(); s++) {
+                dropDown.options[dropDown.options.length] = new Option(hiddenWorkbook.sheets[s].name(), s);
+            }
+        }
+
+    </script>
+
+
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
+
+        <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
+
+
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="http://cep.berkeley.edu/" class="simple-text">
+                    <h4>CEP CUBE</h4>
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li class="active">
+                    <a href="/views/dashboard.hbs">
+                        <i class="pe-7s-graph"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/views/user.hbs">
+                        <i class="pe-7s-user"></i>
+                        <p>Student Information</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/views/table.hbs">
+                        <i class="pe-7s-note2"></i>
+                        <p>STUDENT LIST:EAOP</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/views/typography.hbs">
+                        <i class="pe-7s-news-paper"></i>
+                        <p>SCHOOLS & DISTRICTS</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/views/icons.hbs">
+                        <i class="pe-7s-science"></i>
+                        <p>SERVICES & OUTCOMES</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/views/maps.hbs">
+                        <i class="pe-7s-map-marker"></i>
+                        <p>IAP</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/views/notifications.hbs">
+                        <i class="pe-7s-bell"></i>
+                        <p>IMPORT</p>
+                    </a>
+                </li>
+                <li class="active-pro">
+                    <a href="/views/upgrade.hbs">
+                        <i class="pe-7s-rocket"></i>
+                        <p>YEARLY SYSTEM UPGRADE</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">IMPORT TOOL</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-dashboard"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-globe"></i>
+                                <b class="caret"></b>
+                                <span class="notification">5</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Notification 1</a></li>
+                                <li><a href="#">Notification 2</a></li>
+                                <li><a href="#">Notification 3</a></li>
+                                <li><a href="#">Notification 4</a></li>
+                                <li><a href="#">Another notification</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="">
+                                Account
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                CEP PROGRAMS
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Log out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <input type="file" name="files[]" id="fileDemo" accept=".xlsx,.xls" />
+        <input type="button" id="loadExcel" value="Import" onclick="ImportFileStart()" />
+        <div id="sheetSelection" style="display:none;">
+            <p style="display:inline">Select sheet to load: </p>
+            <select id="sheetSelect" style="display:inline" onchange="CopySheet()"></select>
+        </div>
+
+        <div id = "popup" style = "display:none"></div>
+
+
+
+        <div id="hiddenWorkbook" style="display:none; width: 800px; height: 600px; border: 1px solid gray"></div>
+        <div id="ss" style="width: 800px; height: 300px; border: 1px solid gray"></div>
+
+</body>
+
+<script type = "text/javascript">
+    $(function(){
+        $(btnclick).click(function(){
+            $("#popup").dialog({
+                title: "DUPLICATE CHECK BOX",
+                width:300,
+                modal:true,
+                height:200,
+
+            });
+        });
+    })
+</script>
+<!--   Core JS Files   -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!--<script src="/public/js/jquery-1.10.2.js" type="text/javascript"></script>-->
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+
+<!--  Checkbox, Radio & Switch Plugins -->
+<script src="/js/bootstrap-checkbox-radio-switch.js"></script>
+
+<!--  Charts Plugin -->
+<script src="/js/chartist.min.js"></script>
+
+<!--  Notifications Plugin    -->
+<script src="/js/bootstrap-notify.js"></script>
+
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+<script src="/js/light-bootstrap-dashboard.js"></script>
+
+<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
+<script src="/js/demo.js"></script>
+
+</html>

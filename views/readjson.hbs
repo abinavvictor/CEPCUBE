@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+
+    <title>CEP CUBE</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+ <div class ="table-responsive">
+    <h1>LISTING IMPORTED JSON DATA!</h1>
+    <br/><br/>
+
+    <table class="table table -bordered table-striped table-hover" id = "import_table">
+        <tr>
+            <th>SCHOOL</th>
+            <th>COHORT</th>
+            <th>CEP_PROGRAM</th>
+            <th>CEP_ID</th>
+            <th>FIRST NAME</th>
+            <th>LAST NAME</th>
+            <th>GENDER</th>
+            <th>ETHNICITY</th>
+        </tr>
+    </table>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+<script>
+$(document).ready(function() {
+$.getJSON('http://localhost:3000/tableData', function (data) {
+
+var record = '';
+
+$.each(data, function (key, value){
+record += '<tr>';
+    record += '<td>'+value.school+'</td>';
+    record += '<td>'+value.cohort +'</td>';
+    record += '<td>'+value.cep_program +'</td>';
+    record += '<td>'+value.cep_id +'</td>';
+    record += '<td>'+value.firstname +'</td>';
+    record += '<td>'+value.lname +'</td>';
+    record += '<td>'+value.gender +'</td>';
+    record += '<td>'+value.ethnicity+'</td>';
+    record += '</tr>'
+});
+$('#import_table').append(record);
+});
+
+});
+
+
+</script>
