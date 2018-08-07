@@ -15,7 +15,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+<button id="button-2">IMPORTED DATA</button>
 <div class="container">
  <div class ="table-responsive">
     <h1>LISTING IMPORTED JSON DATA!</h1>
@@ -41,7 +41,7 @@
 
 
 <script>
-$(document).ready(function() {
+$(document).ready(function Appendtable() {
 $.getJSON('http://localhost:3000/tableData', function (data) {
 
 var record = '';
@@ -63,5 +63,5 @@ $('#import_table').append(record);
 
 });
 
-
+$('#button-2').on('click', Appendtable);
 </script>

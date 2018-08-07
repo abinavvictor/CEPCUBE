@@ -53,16 +53,64 @@ app.get('/logout', function(req, res, next) {
 
 
 
+
 app.use('/', appRoutes);
 
 // catch 404 and forward to error handlernode
-app.use(function (req, res, next) {
-    return res.render('notifications');
+/*app.use(function (req, res, next) {
+   // return res.render('dashboard');
+});*/
+
+app.get('/views/dashboard.hbs' , function(req,res){
+    console.log('hjgfshdvdyh' + JSON.stringify(req.params))
+    //res.sendFile(__dirname + 'dashboard.hbs');
+ res.render('dashboard');
 });
 
-app.get('/',function(req,res){
+app.get('/views/upgrade.hbs' , function(req,res){
+    console.log("its a beauty");
+    //res.sendFile(__dirname + 'upgrade.hbs');
+    res.render('upgrade');
+});
+app.get('/views/typography.hbs' , function(req,res){
 
-    res.sendFile(__dirname + 'notifications.hbs');
+    // res.sendFile(__dirname + 'typography.hbs');
+    res.render('typography');
+});
+app.get('/views/icons.hbs' , function(req,res){
+
+    // res.sendFile(__dirname + 'typography.hbs');
+    res.render('icons');
+});
+
+app.get('/views/list.hbs' , function(req,res){
+
+    // res.sendFile(__dirname + 'typography.hbs');
+    res.render('list');
+});
+
+app.get('/views/maps.hbs' , function(req,res){
+
+    // res.sendFile(__dirname + 'typography.hbs');
+    res.render('maps');
+});
+
+app.get('/views/template.hbs' , function(req,res){
+
+    // res.sendFile(__dirname + 'typography.hbs');
+    res.render('template');
+});
+
+app.get('/views/user.hbs' , function(req,res){
+
+    // res.sendFile(__dirname + 'typography.hbs');
+    res.render('user');
+});
+
+app.get('/views/notifications.hbs' , function(req,res){
+
+    // res.sendFile(__dirname + 'typography.hbs');
+    res.render('notifications');
 });
 
 

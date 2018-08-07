@@ -65,16 +65,17 @@ router.post('/upload', function(req, res) {
 
                 for (let i = 0; i < result.length; i++) {
                     var current = result[i];
-
+                    console.log("No - " +  i);
                     products.insertOne(current, function (err) {
-                        if (err)
+                        if (err) {
+                            console.log('rror Occurred while persisting tehdata ')
                             console.log(err);
-
-                        res.json({error_code: 0, err_desc: null, data: result});
+                        }
 
 
                     });
                 }
+                res.send("Success");
 
             }
             )
